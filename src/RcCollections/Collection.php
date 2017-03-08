@@ -32,7 +32,7 @@ class Collection implements JsonSerializable, Serializable
      * for further manipulation of the data by the user.
      *
      * The array change key case function upper or lower cases all of the characters in your
-     * array kets.
+     * array keys.
      *
      * @param int $case
      * @return Collection
