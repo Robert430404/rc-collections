@@ -3,13 +3,14 @@
 namespace RcCollections;
 
 use JsonSerializable;
+use Serializable;
 
 /**
  * Class Collection
  *
  * @package RcCollections
  */
-class Collection implements JsonSerializable
+class Collection implements JsonSerializable, Serializable
 {
     /**
      * @var array
@@ -155,7 +156,7 @@ class Collection implements JsonSerializable
     }
 
     /**
-     * Returns the result of the operations that were done to the collection.
+     * Returns the result of the operations that were done to the collection in an array.
      *
      * @return array
      */
@@ -164,21 +165,61 @@ class Collection implements JsonSerializable
         return $this->data;
     }
 
+    /**
+     * Returns the result of the operations that were done to the collection in a json string.
+     *
+     * @return string
+     */
     public function jsonResult(): string
     {
         return json_encode($this);
     }
 
     /**
+     * Returns the result of the operations that were done to the collection in a serialized string.
+     *
+     * @return string
+     */
+    public function serializedResult(): string
+    {
+        return $this->serialize();
+    }
+
+    /**
      * Specify data which should be serialized to JSON
      *
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
+     * @return mixed data which can be serialized by json_encode, which is a value of any type other than a resource.
      * @since 5.4.0
      */
     public function jsonSerialize()
     {
         return $this->data;
+    }
+
+    /**
+     * String representation of object
+     * @link http://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize():string
+    {
+        return serialize($this->data);
+    }
+
+    /**
+     * Constructs the object
+     *
+     * @link http://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized
+     * @return Collection
+     * @since 5.1.0
+     */
+    public function unserialize($serialized): Collection
+    {
+        $this->data = unserialize($serialized);
+
+        return $this;
     }
 }
