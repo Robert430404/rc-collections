@@ -78,6 +78,30 @@ class Collection
     }
 
     /**
+     * Performs a array combine on the data, and then returns the collection for further
+     * manipulation of the data by the user.
+     *
+     * This method makes use of the array combine to merge two structures, but it also gives
+     * you a switch so you can either merge the new data as keys or values.
+     *
+     * @param array $data
+     * @param bool $values
+     * @return Collection
+     */
+    public function combine(array $data, bool $values = true): Collection
+    {
+        $combined = array_combine($this->data, $data);
+
+        if (!$values) {
+            $combined = array_combine($data, $this->data);
+        }
+
+        $this->data = $combined;
+
+        return $this;
+    }
+
+    /**
      * Performs a array count values on the data, and then returns the collection for further
      * manipulation of the data by the user.
      *
