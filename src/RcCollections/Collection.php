@@ -60,6 +60,40 @@ class Collection
     }
 
     /**
+     * Performs a array column on the data, and then returns the collection for further
+     * manipulation of the data by the user.
+     *
+     * Returns the values from a single column in the input array based up on the key of the
+     * nested associative array
+     *
+     * @param $column
+     * @param $key
+     * @return Collection
+     */
+    public function column($column, $key = null): Collection
+    {
+        $this->data = array_column($this->data, $column, $key);
+
+        return $this;
+    }
+
+    /**
+     * Performs a array count values on the data, and then returns the collection for further
+     * manipulation of the data by the user.
+     *
+     * Counts the occurrence of a specific value inside of an array and then returns an array
+     * using the value as a key and the number of occurrences as the value.
+     *
+     * @return Collection
+     */
+    public function countValueOccurrence(): Collection
+    {
+        $this->data = array_count_values($this->data);
+
+        return $this;
+    }
+
+    /**
      * Performs a map on the data, and then returns the collection for further manipulation
      * of the data by the user.
      *
