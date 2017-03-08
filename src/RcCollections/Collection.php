@@ -84,8 +84,9 @@ class Collection implements JsonSerializable, Serializable
      * Performs a array combine on the data, and then returns the collection for further
      * manipulation of the data by the user.
      *
-     * This method makes use of the array combine to merge two structures, but it also gives
-     * you a switch so you can either merge the new data as keys or values.
+     * This method makes use of the array combine to combine two structures, using one
+     * as a key set and the other as a value set, into a single array. You have a switch
+     * available to you so you can either merge the new data as keys or values.
      *
      * @param array $data
      * @param bool $values
@@ -151,6 +152,30 @@ class Collection implements JsonSerializable, Serializable
     public function filter(Callable $handle, int $mode = ARRAY_FILTER_USE_BOTH): Collection
     {
         $this->data = array_filter($this->data, $handle, $mode);
+
+        return $this;
+    }
+
+    /**
+     * Performs a merge on the data, and then returns the collectionf or further manipulation
+     * of the data by the user.
+     *
+     * This method makes use of the array merge to merge two structures into a single array.
+     * There is also a switch available so you can set which array is first in the new array.
+     *
+     * @param array $data
+     * @param bool $first
+     * @return Collection
+     */
+    public function merge(array $data, bool $first = true): Collection
+    {
+        $merged = array_merge($data, $this->data);
+
+        if (!$first) {
+            $merged = array_merge($this->data, $data);
+        }
+
+        $this->data = $merged;
 
         return $this;
     }
