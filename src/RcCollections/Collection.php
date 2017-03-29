@@ -157,7 +157,7 @@ class Collection implements JsonSerializable, Serializable
     }
 
     /**
-     * Performs a merge on the data, and then returns the collectionf or further manipulation
+     * Performs a merge on the data, and then returns the collection for further manipulation
      * of the data by the user.
      *
      * This method makes use of the array merge to merge two structures into a single array.
@@ -178,6 +178,128 @@ class Collection implements JsonSerializable, Serializable
         $this->data = $merged;
 
         return $this;
+    }
+
+    /**
+     * Pops the last value off of the array and sets it as the working set, and then returns
+     * the collection for further manipulation.
+     *
+     * @return $this
+     */
+    public function pop(): Collection
+    {
+        $this->data = array_pop($this->data);
+
+        return $this;
+    }
+
+    /**
+     * Pushes a new value into the working set and then returns the collection for further
+     * manipulation.
+     *
+     * @param $value
+     * @return $this
+     */
+    public function push($value): Collection
+    {
+        array_push($this->data, $value);
+
+        return $this;
+    }
+
+    /**
+     * Reverses the core data, and sets it as the working set. It then returns the
+     * collection for further manipulation.
+     *
+     * @return Collection
+     */
+    public function reverse(): Collection
+    {
+        $this->data = array_reverse($this->data);
+
+        return $this;
+    }
+
+    /**
+     * Shifts an item off of the beginning of the data, and sets it as the working set. It
+     * then returns the collection for further manipulation.
+     *
+     * @return Collection
+     */
+    public function shift(): Collection
+    {
+        array_shift($this->data);
+
+        return $this;
+    }
+
+    /**
+     * Performs an array_slice on the data set, sets it as the working set. It then returns the
+     * collection for further manipulation.
+     *
+     * @param int $offset
+     * @param int|null $length
+     * @param bool $preserveKeys
+     * @return Collection
+     */
+    public function slice(int $offset, int $length = null, bool $preserveKeys = false): Collection
+    {
+        $this->data = array_slice($this->data, $offset, $length, $preserveKeys);
+
+        return $this;
+    }
+
+    /**
+     * UnShifts an item on to the beginning of the data, and sets it as the working set. It
+     * then returns the collection for further manipulation.
+     *
+     * @return Collection
+     */
+    public function unshift($value): Collection
+    {
+        array_unshift($this->data, $value);
+
+        return $this;
+    }
+
+    /**
+     * Performs a walk on the data, and then returns the collection for further manipulation
+     * of the data by the user.
+     *
+     * The array walk applies all of the mutations you have in your handler to the value of the
+     * array you are currently manipulating.
+     *
+     * @param callable $handle
+     * @param null $userData
+     * @return Collection
+     */
+    public function walk(Callable $handle, $userData = null): Collection
+    {
+        array_walk($this->data, $handle, $userData);
+
+        return $this;
+    }
+
+    /**
+     * Returns the sum of the array's values.
+     *
+     * @return float|int
+     */
+    public function sumResult()
+    {
+        return array_sum($this->data);
+    }
+
+    /**
+     * Returns a random value from the array
+     *
+     * @return mixed
+     */
+    public function randResult()
+    {
+        $value = array_rand($this->data);
+
+        return $this->data[$value];
     }
 
     /**
@@ -217,7 +339,7 @@ class Collection implements JsonSerializable, Serializable
      * @return mixed data which can be serialized by json_encode, which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->data;
     }
