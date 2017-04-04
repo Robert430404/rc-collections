@@ -16,5 +16,8 @@
             "RcCollections\\":"src/RcCollections/",
             "RcCollections\\Tests\\":"tests/RcCollections/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0"
     }
 }
